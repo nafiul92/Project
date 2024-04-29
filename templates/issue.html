@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Address</th>
+          <th scope="col">Issue Date</th>
+          <th scope="col">Return Date</th>
+          <th scope="col">Return</th>
+        </tr>
+    </thead>
+          <tbody>
+           {% for issue in issues %}
+                <tr>
+                  <th scope="row">{{ issue.id }}</th>
+                  <th scope="row">{{ issue.username }}</th>
+                  <td>{{ issue.email }}</td>
+                  <td>{{ issue.mobile }}</td>
+                  <td>{{ issue.address }}</td>
+                  <td>{{ issue.issued_at }}</td>
+                  <td>{{ issue.return_date }}</td>
+                  <td>{{ issue.returned }}</td>
+                </tr>
+           {% endfor %}
+          </tbody>
+</table>
+
+{% endblock content %}
