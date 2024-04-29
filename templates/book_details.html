@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container">
+        <div class="row" style="margin-top: 6%">
+            <div class="col-sm-8 blog-main">
+                <div class="blog-post">
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-6 text-right">
+                                  <img src="{% if book.image %} {{ book.image.url }} {% endif %}" alt="..." style="height: 170px; width: auto">
+                                </div>
+                                <div class="col-md-6" style="padding-left: 20px">
+                                    <h3>{{ book.name }}</h3>
+                                    <h6>{{ book.category.name }}</h6>
+                                    <h6 class="text-muted">{{ book.author }}</h6>
+                                    <p>{{ book.description|safe|linebreaksbr }}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% if request.user.is_authenticated %}
+
+                <h1>BOOK ISSUE FORM</h1>
+
+                <form action="{% url 'book_issue' book.id %}" method="post">
+                    {% csrf_token %}
+
+                    {% for hidden in form.hidden_fields %}
+                      {{ hidden }}
+                    {% endfor %}
+
+                    {% for field in form.visible_fields %}
+                      <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field|add_class:'form-control' }}
+                        {% for error in field.errors %}
+                          <span class="help-block">{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                    {% endfor %}
+                    <input type="submit" value="add to cart" class="btn btn-primary">
+                </form>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
